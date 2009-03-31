@@ -12,6 +12,8 @@ markup="markdown"
 indir=$PWD
 outdir="$indir"
 datefmt="%m/%d/%y"
+indextpl="index"
+posttpl="post"
 
 # build_post infile template
 # Put the post body in $postBody
@@ -45,7 +47,7 @@ function build_posts()
 	#echo $posts
 	for post in $posts; do
 		#echo "Built \`$post'"
-		build_post $post post
+		build_post $post $posttpl
 	done
 	return
 }
@@ -77,17 +79,17 @@ if [ ! -d "$indir" ]; then
 elif [ ! -d "$outdir" ]; then
 	echo "Directory \`$outdir' does not exist"; exit 1
 elif [ ! -d "$outdir/_posts" ]; then
-	echo "A \`_posts' directory does not exist in \`$outdir'"; exit 1
+	echo "A \`_posts' directory does not exist in output directory"; exit 1
 elif [ ! -f "$indir/index.tpl" ]; then
-	echo "No \`index.tpl' file in \`$outdir'"; exit 1
+	echo "No \`index.tpl' file in output directory"; exit 1
 elif [ ! -f "$indir/post.tpl" ]; then
-	echo "No \`post.tpl' file in \`$outdir'"; exit 1
+	echo "No \`post.tpl' file in output directory"; exit 1
 fi
 
 echo "Building site from \`$indir' to \`$outdir'"
-awk -f template.awk < "$indir/index.tpl" > "$outdir/index.sh"
+awk -f template.awk < "$indir/$indextpl.tpl" > "$outdir/$indextpl.sh"
 postIndex=$(build_posts | awk 'BEGIN {FS="\t"} /.*/ { printf("<li><a href=\"posts/%s\">%s</a></li>\n", $3, $1); }')
-. "$outdir/index.sh" > "$outdir/index.html"
+. "$outdir/$indextpl.sh" > "$outdir/index.html"
 cleanup
 echo "Site built successfully"
 
