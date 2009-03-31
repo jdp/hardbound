@@ -1,7 +1,6 @@
 #!/bin/bash
 #
 # Hardbound
-# Blogging Like a Hacker
 # Copyright (c) 2009 Justin Poliey <jdp34@njit.edu>
 #
 # Usage:
@@ -9,23 +8,18 @@
 #
 
 markup="markdown"
-indir=$PWD
+indir="$PWD"
 outdir="$indir"
 datefmt="%m/%d/%y"
 indextpl="index"
 posttpl="post"
 
-# build_post infile template
-# Put the post body in $postBody
-# Compile <template>.tpl to <template>.sh
-# Execute <template>.sh, and save as <infile>.html
 function build_post()
 {
 	local infile
 	local outfile
 	infile=$1
 	template=$2
-	#nosuffix=$(basename "$infile" .$markup)
 	postTitle=$(cat $infile | sed -n '1,/%%/ p' | sed -n 's/[Tt]itle: \(.\+\)/\1/p')
 	postDate=$(date --date="`echo "$infile" | sed -n 's/.*\([0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]\).*/\1/p'`" +"$datefmt")
 	if [ -z "$postTitle" ]; then
@@ -44,9 +38,7 @@ function build_post()
 function build_posts()
 {
 	posts=$(get_post_list)
-	#echo $posts
 	for post in $posts; do
-		#echo "Built \`$post'"
 		build_post $post $posttpl
 	done
 	return
@@ -58,7 +50,6 @@ function get_post_list()
 	return
 }
 
-# Cleans up the $outdir directory
 function cleanup()
 {
 	rm -f "$outdir/*.sh"

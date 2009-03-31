@@ -31,6 +31,16 @@ file in the input directory's root. It will then put the HTML versions of those
 files in the `posts' directory of the output directory. Finally, Hardbound will 
 then build an `index.html' from the `index.tpl' file.
 
+  Each post has a metadata header. The format is:
+  
+    title: Your Post Title
+    %%
+    
+  The two parentheses (%%) separate the actual article from the metadata. At the
+moment, only the title header is available, but this makes room for more to be
+added in the future. The final filename (and slug) of the HTML files generated
+depends completely on the post title, not the filename of the source.
+
 == TEMPLATES ==
 
   Hardbound uses Werc's template system, it's simple and easy to use. The
@@ -59,3 +69,12 @@ environment variables. A quick overview:
     $postDate   The date of the post. Available in `post.tpl'
     $postBody   The body of the post. Available in `post.tpl'
     $postIndex  List of posts in <li> tags. Available in `index.tpl'
+    
+== DEPENDENCIES ==
+
+  Hardbound uses the `markdown' program by default, and it wouldn't be hard to
+modify it to pass it to any other markdown parser, or add a handler for Textile
+or any other markup language. The `markdown' program is from the discount
+library, which can be found at:
+
+  http://www.pell.portland.or.us/~orc/Code/markdown/
