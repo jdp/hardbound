@@ -19,13 +19,43 @@ website.
     Jekyll http://github.com/mojombo/jekyll
     
 == USING ==
-
+ 
   To use Hardbound, you must first create a directory where all of the files
-will be kept. Inside that directory, Hardbound expects there to be a `posts'
+will be kept. Inside that directory, Hardbound expects there to be a `_posts'
 directory containing plain text articles, with the filenames in the format of:
 
   YYYY-MM-DD-post-name.markdown
   
-  Hardbound will then convert each of those files to HTML, while maintaining a
-a file that contains the title, filename, and href link value of each post. The
-indexed file is used by template files to build the HTML post index.
+  Hardbound will then convert each of those files to HTML, using the `post.tpl'
+file in the input directory's root. It will then put the HTML versions of those
+files in the `posts' directory of the output directory. Finally, Hardbound will 
+then build an `index.html' from the `index.tpl' file.
+
+== TEMPLATES ==
+
+  Hardbound uses Werc's template system, it's simple and easy to use. The
+template system allows you to execute shell commands and gives you access to
+environment variables. A quick overview:
+
+  Lines prefixed with % will be executed as shell script.
+  
+    % echo "From shell"
+
+  Multiline code goes between %{ and %}.
+  
+    %{
+    for i in a b c; do
+      echo <li>$i</li>
+    done
+    %}
+    
+  For inline environment variables, use %( and %).
+  
+    <div>The value of $PWD: %($PWD%)</div>
+
+  Some special variables for Hardbound are:
+  
+    $postTitle  The title of the post. Available in `post.tpl'
+    $postDate   The date of the post. Available in `post.tpl'
+    $postBody   The body of the post. Available in `post.tpl'
+    $postIndex  List of posts in <li> tags. Available in `index.tpl'
