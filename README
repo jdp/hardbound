@@ -1,0 +1,31 @@
+       _____________
+      /:           /|
+     /: Hardbound ///
+    /:    ----   ///
+   /:           ///
+  /:___________///
+  |____________|/
+
+
+== ABOUT ==
+
+  Hardbound is a fabulously simple static web site generator written in the most
+accessible language there is: shell script. Essentially, all that Hardbound
+does is convert a set of templates and plain text articles into a functional
+website.
+
+  Hardbound was inspired by these fantastic projects:
+    Werc   http://werc.cat-v.org
+    Jekyll http://github.com/mojombo/jekyll
+    
+== USING ==
+
+  To use Hardbound, you must first create a directory where all of the files
+will be kept. Inside that directory, Hardbound expects there to be a `posts'
+directory containing plain text articles, with the filenames in the format of:
+
+  YYYY-MM-DD-post-name.markdown
+  
+  Hardbound will then convert each of those files to HTML, while maintaining a
+a file that contains the title, filename, and href link value of each post. The
+indexed file is used by template files to build the HTML post index.
